@@ -49,5 +49,12 @@ transform.NewReader将指定编码类型转换成utf8
 正则匹配：<a href="http://album.zhenai.com/u/[0-9]+".*>[^<]+</a>
 ```
 
+### 并发版Crawler
 
+* 单任务爬虫: 每次Fetcher\(获取页面代码\),都发送一次http请求,并且等待该请求结果返回后才进行parser,然后才进行下一个任务.
+* 并发版爬虫: Fetcher的输出就是Parser的输入,将这部分当作一个worker,分配一个goRoutine.即可让多个任务同时进行.
+
+![](.gitbook/assets/b475aadc83f0425c3d30c90507b268ca.jpg)
+
+![](.gitbook/assets/image%20%283%29.png)
 
