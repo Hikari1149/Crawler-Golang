@@ -60,3 +60,13 @@ transform.NewReader将指定编码类型转换成utf8
 
 ![](.gitbook/assets/image%20%286%29.png)
 
+#### 将获取的数据存入ElasticSearch
+
+```text
+
+```
+
+{% hint style="info" %}
+在docker中部署ElasticSearch [https://www.cnblogs.com/jianxuanbing/p/9410800.html](https://www.cnblogs.com/jianxuanbing/p/9410800.html)
+{% endhint %}
+
