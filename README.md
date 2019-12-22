@@ -81,5 +81,11 @@ _,err=indexService.Do(context.Background())
 
 ![](.gitbook/assets/image%20%286%29.png)
 
+{% hint style="info" %}
+RPC入门 [https://chai2010.cn/advanced-go-programming-book/ch4-rpc/ch4-01-rpc-intro.html](https://chai2010.cn/advanced-go-programming-book/ch4-rpc/ch4-01-rpc-intro.html)
+{% endhint %}
+
+
+
 
 
