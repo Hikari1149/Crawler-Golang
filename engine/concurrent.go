@@ -1,12 +1,9 @@
 package engine
 
-import (
-	"log"
-)
-
 type ConcurrentEngine struct{
 	Scheduler Scheduler
 	WorkerCount int
+	ItemChan chan Item
 }
 
 type Scheduler interface{
@@ -19,6 +16,18 @@ type ReadyNotifier interface{
 	WorkerReady(chan Request)
 }
 
+var visitedUrl = make(map[string]bool)
+
+// url duplicate
+func isDuplicate(url string) bool{
+	if visitedUrl[url]{
+		return true
+	}
+	visitedUrl[url] =true
+	return false
+}
+
+
 func (e *ConcurrentEngine) Run(seeds ...Request){
 	out:=make(chan ParseResult)
 	e.Scheduler.Run()
@@ -27,17 +36,25 @@ func (e *ConcurrentEngine) Run(seeds ...Request){
 	}
 
 	for _,r:=range seeds{
-		e.Scheduler.Submit(r)
+		if isDuplicate(r.Url){
+			continue
+		}
+		e.Scheduler.Submit(r) //request to chanel
 	}
 
 	for {
 		result:= <-out
 		for _,item:=range result.Items{
-			log.Printf("Got item: %v ",item)
+			go func() {
+				e.ItemChan <- item
+			}() //send item to save
 		}
 
 		for _,request:=range result.Requests{
-			e.Scheduler.Submit(request)
+			if isDuplicate(request.Url){
+				continue
+			}
+			e.Scheduler.Submit(request) //
 		}
 	}
 }
