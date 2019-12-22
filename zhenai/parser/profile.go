@@ -35,9 +35,21 @@ func extractToString(contents []byte,re *regexp.Regexp) string{
 			return ""
 		}
 }
-func ProfileParser(name string) engine.ParserFunc{
-	return func(c []byte,url string)  engine.ParseResult{
-		return ParseProfile(c,url,name)
+type ProfileParser struct{
+	userName string
+}
+
+func (p *ProfileParser) Parse(contents []byte, url string) engine.ParseResult {
+	return ParseProfile(contents,p.userName,url)
+}
+
+func (p *ProfileParser) Serialize() (name string, args interface{}) {
+	return "ProfileParser",p.userName
+}
+
+func NewProfileParser(name string) *ProfileParser{
+	return &ProfileParser{
+		userName:name,
 	}
 
 }

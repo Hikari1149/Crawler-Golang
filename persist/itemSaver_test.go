@@ -26,7 +26,7 @@ func TestSave(t *testing.T) {
 		panic(err)
 	}
 	const index = "dating_test"
-	err =save(client,index,profile)
+	err =Save(client,index,profile)
 	if err!=nil {
 		panic(err)
 	}

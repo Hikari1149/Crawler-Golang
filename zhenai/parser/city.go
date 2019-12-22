@@ -17,17 +17,16 @@ func ParseCity (contents []byte,url string) engine.ParseResult{
 		//result.Items = append(result.Items, "User: "+ name)
 		result.Requests = append(result.Requests,engine.Request{
 			Url:        string(m[1]),
-			ParserFunc: func (contents []byte,url string) engine.ParseResult{
-				return ParseProfile(contents,name,string(m[1]))//闭包
+			Parser:NewProfileParser(name),
 			},
-		})
+		)
 	}
 
 	matches = cityUrlRe.FindAllSubmatch(contents,-1) //next page and other filter
 	for _,m:=range matches{
 		result.Requests = append(result.Requests,engine.Request{
 			Url:       string(m[1]),
-			ParserFunc: ParseCity,
+			Parser: engine.NewFuncParser(ParseCity,"ParseCity"),
 		})
 	}
 	return result
