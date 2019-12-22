@@ -4,7 +4,7 @@ description: Golang 爬取珍爱网数据
 
 # Golang 爬虫
 
-![&#x722C;&#x866B;&#x7ED3;&#x6784;](.gitbook/assets/image%20%282%29.png)
+![&#x722C;&#x866B;&#x7ED3;&#x6784;](.gitbook/assets/image.png)
 
 
 
@@ -38,7 +38,7 @@ transform.NewReader将指定编码类型转换成utf8
 <a href="(http://www.zhenai.com/zhenghun/[0-9a-z]+)" data-v-5e16505f>([^<]+)</a>
 ```
 
-![&#x57CE;&#x5E02;&#x9875;&#x9762;&#x8BE6;&#x60C5;&#x7684;url](.gitbook/assets/image.png)
+![&#x57CE;&#x5E02;&#x9875;&#x9762;&#x8BE6;&#x60C5;&#x7684;url](.gitbook/assets/image%20%285%29.png)
 
 * **城市详情parser \(获取用户列表与用户详情页url\)**
 
@@ -56,17 +56,30 @@ transform.NewReader将指定编码类型转换成utf8
 
 ![](.gitbook/assets/b475aadc83f0425c3d30c90507b268ca.jpg)
 
-![](.gitbook/assets/image%20%283%29.png)
+![](.gitbook/assets/image%20%281%29.png)
 
-![](.gitbook/assets/image%20%286%29.png)
+![](.gitbook/assets/image%20%284%29.png)
 
 #### 将获取的数据存入ElasticSearch
 
 ```text
-
+client,err:=elastic.NewClient(elastic.SetSniff(false))//turn off sniff in docker
+indexService:=client.Index().Index(index).Type(item.Type).BodyJson(item)
+if item.Id !=""{
+	indexService.Id(item.Id)
+}
+_,err=indexService.Do(context.Background())		
 ```
 
 {% hint style="info" %}
 在docker中部署ElasticSearch [https://www.cnblogs.com/jianxuanbing/p/9410800.html](https://www.cnblogs.com/jianxuanbing/p/9410800.html)
 {% endhint %}
+
+### 分布式Crawler
+
+![](.gitbook/assets/image%20%282%29.png)
+
+![](.gitbook/assets/image%20%286%29.png)
+
+
 
