@@ -20,7 +20,7 @@ func ItemSaver(host string) (chan engine.Item,error){
 			itemCount++
 			//call rpc to save item
 			result:=""
-			err:=client.Call(config.ItemSaverRpc,item,&result)
+			err:=client.Call(config.ItemSaverRpc+".Save",item,&result)
 			if err!=nil{
 				log.Printf("Item Saver error: %v\n",err)
 			}
