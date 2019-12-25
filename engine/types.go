@@ -32,7 +32,7 @@ func (n NilParser) Parse(contents []byte, url string) ParseResult {
 }
 
 func (n NilParser) Serialize() (name string, args interface{}) {
-	return "nilParser",nil
+	return "NilParser",nil
 }
 type FuncParser struct {
 	parser ParserFunc
